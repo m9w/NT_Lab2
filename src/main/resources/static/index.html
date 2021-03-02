@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test page</title>
+</head>
+<body>
+<script type="text/javascript">
+
+function getXmlHttp() {
+var xmlhttp;
+try { xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+} catch (e) {
+try { xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+} catch (E) {
+xmlhttp = false;
+}
+}
+if (!xmlhttp && typeof XMLHttpRequest!='undefined') xmlhttp = new XMLHttpRequest();
+return xmlhttp;
+}
+
+function exec(area, contentType) {
+    var xmlhttp = getXmlHttp();
+    xmlhttp.open('POST', '/omdb?word', true);
+    xmlhttp.setRequestHeader('Content-Type', contentType+'; charset="utf-8"');
+    xmlhttp.send(document.getElementById(area).value);
+    xmlhttp.onreadystatechange = function() {
+        document.getElementById("res").innerHTML = xmlhttp.responseText;
+    };
+}
+</script>
+<div>
+    <textarea id="xml" cols="30" rows="10">
+<?xml version="1.0" encoding="utf-8"?>
+<films>
+    <get>tt0372784</get>
+    <get>tt0096895</get>
+    <get>tt0103776</get>
+    <get>tt0112462</get>
+    <get>tt0118688</get>
+    <get>tt4116284</get>
+    <get>tt1569923</get>
+    <get>tt2313197</get>
+    <find>Batman</find>
+    <find>Superman</find>
+    <find>Spiderman</find>
+    <find>Superman</find>
+    <find>Antman</find>
+    <find>Ironman</find>
+    <find>Deadpool</find>
+</films>
+    </textarea>
+    <button onclick="exec('xml', 'application/xml')">send</button>
+
+
+    <textarea id="json" cols="30" rows="10">
+{
+    "get":["tt0372784", "tt0096895"],
+    "find":["Batman","Superman"]
+}
+    </textarea>
+    <button onclick="exec('json', 'application/json')">send</button>
+
+    <p id="res"></p>
+</div>
+</body>
+</html>
