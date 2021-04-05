@@ -22,7 +22,7 @@ return xmlhttp;
 
 function exec(area, contentType) {
     var xmlhttp = getXmlHttp();
-    xmlhttp.open('POST', '/omdb?word', true);
+    xmlhttp.open('POST', '/omdb', true);
     xmlhttp.setRequestHeader('Content-Type', contentType+'; charset="utf-8"');
     xmlhttp.send(document.getElementById(area).value);
     xmlhttp.onreadystatechange = function() {
